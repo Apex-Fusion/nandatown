@@ -67,7 +67,7 @@ def build_a2a_app(base_url: str = "http://127.0.0.1:8940",
     app = FastAPI(title="nandatown a2a seller", version=__version__)
     tasks: dict[str, dict[str, Any]] = {}
     fulfillment_counts: dict[str, int] = {}
-    order_terms: dict[str, dict[str, Any]] = {}
+    order_terms: dict[str, str] = {}
     card_fetches = {"n": 0}
 
     @app.get("/.well-known/agent-card.json")
@@ -87,7 +87,11 @@ def build_a2a_app(base_url: str = "http://127.0.0.1:8940",
                 and defect != "accept_conflicting_retry":
             # A request_id binds to the terms it was first quoted under: an
             # identical retry is answered again, a changed one is refused.
-            terms = {k: v for k, v in request.items() if k != "request_id"}
+            # Terms are compared as canonical JSON, so true and 1 differ
+            # (Python's True == 1 would not) while key order does not.
+            terms = json.dumps(
+                {k: v for k, v in request.items() if k != "request_id"},
+                sort_keys=True, separators=(",", ":"))
             if order_terms.setdefault(request_id, terms) != terms:
                 return "rejected", {"request_id": request_id,
                                     "error": "request_id already quoted"

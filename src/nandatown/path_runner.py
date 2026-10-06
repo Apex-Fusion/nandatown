@@ -261,7 +261,8 @@ def _conflicting_retry_stage(profile: PathProfile,
                              driver_errors: list[TownEvent],
                              first_fulfillment: list[TownEvent],
                              second_exchange: list[TownEvent],
-                             second: list[TownEvent]) -> StageResult:
+                             second: list[TownEvent],
+                             second_outcomes: list[TownEvent]) -> StageResult:
     """The retry reused the order id with changed terms.
 
     Only a task the subject ended 'rejected', A2A's state for declining
@@ -288,6 +289,19 @@ def _conflicting_retry_stage(profile: PathProfile,
                  f" observed {len(second_exchange)}")
     exchange = second_exchange[0]
     detail = exchange.detail
+    refused = detail.get("kind") == "task" \
+        and detail.get("state") in ("rejected", "failed")
+    if second_outcomes and (not detail.get("ok") or refused):
+        # A retry that returned no task, or ended without performing it,
+        # cannot also have been fulfilled; the trace contradicts itself.
+        return StageResult(
+            name="conflicting_retry", status="failed",
+            evidence=[exchange.event_id]
+            + [event.event_id for event in second_outcomes],
+            note="the recorded retry contradicts itself: the exchange"
+                 f" ended state {detail.get('state')!r} but"
+                 f" {len(second_outcomes)} fulfillment outcome(s) were"
+                 " recorded for it")
     if not detail.get("ok"):
         return StageResult(
             name="conflicting_retry", status="not_enough_evidence",
@@ -926,7 +940,7 @@ def evaluate_path(profile: PathProfile, run_id: str,
     if profile.controlled_condition == "conflicting_retry":
         stages.append(_conflicting_retry_stage(
             profile, driver_errors, first_fulfillment, second_exchange,
-            second))
+            second, second_outcomes))
     elif strict_semantics and len(first_fulfillment) == 1 \
             and len(second_exchange) > 1:
         stages.append(StageResult(

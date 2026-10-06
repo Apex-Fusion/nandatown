@@ -349,3 +349,48 @@ def test_two_recorded_retry_exchanges_fail_the_stage(tmp_path):
     conflict = stage(replay, "conflicting_retry")
     assert conflict.status == "failed"
     assert "exactly one protocol exchange" in conflict.note
+
+
+# -- term identity and contradictory records ----------------------------
+
+
+def test_reference_seller_compares_terms_by_json_type_not_python_equality():
+    # True == 1 in Python, but true and 1 are different JSON terms.
+    def send(http, color):
+        body = {"sku": "widget", "quantity": 2, "unit_price_cents": 1995,
+                "color": color, "request_id": "order-typed"}
+        return send_message(SUBJECT, json.dumps(body), http=http)
+
+    with TestClient(build_a2a_app(SUBJECT)) as http:
+        assert send(http, True)["status"]["state"] == "completed"
+        assert send(http, 1)["status"]["state"] == "rejected"
+        assert send(http, True)["status"]["state"] == "completed"
+
+
+def test_reference_seller_ignores_key_order_in_terms():
+    with TestClient(build_a2a_app(SUBJECT)) as http:
+        first = quote(http, 2)
+        body = {"request_id": "order-abc", "unit_price_cents": 1995,
+                "quantity": 2, "sku": "widget"}
+        again = send_message(SUBJECT, json.dumps(body), http=http)
+    assert again["status"]["state"] == "completed"
+    assert artifact_text(again) == artifact_text(first)
+
+
+def test_a_rejected_retry_with_a_recorded_fulfillment_fails_on_replay(
+        tmp_path):
+    # A trace that records both a refusal and a fulfillment for the retry
+    # contradicts itself; replay must not read it as a refusal.
+    directory, result = run_against_seller(tmp_path)
+    bundle = load_bundle(directory)
+    events = list(bundle["events"])
+    first = next(e for e in events if e.kind == "fulfillment_observed"
+                 and e.detail["attempt"] == 1)
+    events.append(first.model_copy(update={
+        "event_id": "ev-99",
+        "detail": dict(first.detail, attempt=2, total_cents=9975)}))
+    replay = evaluate_path(bundle["profile"], result.run_id, events)
+    conflict = stage(replay, "conflicting_retry")
+    assert conflict.status == "failed"
+    assert "contradict" in conflict.note
+    assert "ev-99" in conflict.evidence
