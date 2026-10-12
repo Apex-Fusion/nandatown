@@ -16,6 +16,10 @@ from ..layers import LAYER_NAMES, resolve
 from ..records import TownEvent
 
 
+class SubscriptionLoop(Exception):
+    """A layer was re-entered for an event kind it is still handling."""
+
+
 class Engine:
     def __init__(self, spec, run_id: str | None = None):
         self.spec = spec
@@ -28,8 +32,19 @@ class Engine:
         self.events: list[TownEvent] = []
         self.intents: list[dict[str, Any]] = []
         self.agents: dict[str, Any] = {}
+        # Set first: a plugin may emit from its own constructor.
+        self._subscribers: dict[str, list[tuple[str, Any]]] = {}
+        self._dispatching: set[tuple[str, str]] = set()
         self.layers = {name: resolve(name, spec.layers[name])(self)
                        for name in LAYER_NAMES}
+        # A layer reacts to another layer's events by naming the kinds it
+        # wants in subscribes_to and defining on_event.
+        for name, layer in self.layers.items():
+            notify = getattr(layer, "on_event", None)
+            if not callable(notify):
+                continue
+            for kind in getattr(layer, "subscribes_to", ()):
+                self._subscribers.setdefault(kind, []).append((name, notify))
         self.layers["transport"].configure(
             [f.model_dump() for f in spec.faults])
         self.layers["privacy"].configure(spec.redact_fields)
@@ -43,6 +58,18 @@ class Engine:
                           at=self.now, observer=observer, kind=kind,
                           subject=subject, detail=detail or {})
         self.events.append(event)
+        for name, notify in self._subscribers.get(kind, ()):
+            # A subscriber may emit. Re-entering the same layer for the same
+            # kind cannot terminate, so it is refused rather than recursed.
+            seen = (name, kind)
+            if seen in self._dispatching:
+                raise SubscriptionLoop(
+                    f"layer {name!r} re-entered on {kind!r}")
+            self._dispatching.add(seen)
+            try:
+                notify(event)
+            finally:
+                self._dispatching.discard(seen)
         return event.event_id
 
     def record_intent(self, actor: str, action: str,

@@ -30,6 +30,8 @@ STAGE_MEANING = {
     "recovered_after_restart": "accepted work survived the crash and was"
                                " redelivered",
     "stale_fence_rejected": "the old attempt could not act after its lease",
+    "amnesia_survived": "work the seller forgot and recomputed produced one"
+                        " accepted response",
     "duplicate_recognized": "the participant recognized work it already"
                             " handled",
     "wakeup_loss_tolerated": "a lost wake-up hint did not lose inbox work",
@@ -72,6 +74,20 @@ STAGE_MEANING = {
     "semantic_result": "the task produced the required result",
     "duplicate_request": "the duplicate order caused no second"
                          " fulfillment",
+    "conflicting_retry": "a reused order id with changed terms was"
+                         " refused",
+}
+
+# Under crash_amnesia the seller forgets its first application and
+# recomputes, so it applied the task twice. Its acknowledgement can only
+# speak for the attempt that survived; the claim proved is one response.
+_AMNESIA_MEANING = {
+    "processed": "the seller acknowledged one application; the work it"
+                 " forgot before the crash was recomputed, not skipped",
+}
+FAULT_STAGE_MEANING = {
+    "crash_amnesia": _AMNESIA_MEANING,
+    "crash_amnesia_fresh_ids": _AMNESIA_MEANING,
 }
 
 SCOPE_SENTENCE = ("This result applies only to the named agents, releases,"
@@ -93,8 +109,13 @@ def render_report(bundle: dict[str, Any]) -> str:
             " (an already-running external agent)")
         add(f"Profile:   {profile.ref}"
             f" ({run.profile_fingerprint[:23]})")
-        add(f"Condition: {profile.controlled_condition}: the same"
-            " logical order is delivered twice")
+        if profile.controlled_condition == "conflicting_retry":
+            add(f"Condition: {profile.controlled_condition}: the order id"
+                " is sent again with changed terms"
+                f" {profile.expected.get('retry_changes')}")
+        else:
+            add(f"Condition: {profile.controlled_condition}: the same"
+                " logical order is delivered twice")
     elif bundle.get("mode") == "lab":
         faults = ", ".join(f"{f.action} {f.kind}" for f in profile.faults) \
             or "none"
@@ -140,10 +161,12 @@ def render_report(bundle: dict[str, Any]) -> str:
     add("")
     add("Stages (each one a separate claim with its own failure boundary):")
     name_width = max(len(s.name) for s in result.stages)
+    meanings = {**STAGE_MEANING, **FAULT_STAGE_MEANING.get(
+        getattr(profile, "fault", None), {})}
     for s in result.stages:
         label = STATUS_LABEL[s.status]
         meaning = ("not exercised in this run" if s.status == "not_tested"
-                   else STAGE_MEANING.get(s.name, ""))
+                   else meanings.get(s.name, ""))
         evidence = f" [{', '.join(s.evidence)}]" if s.evidence else ""
         add(f"  {s.name.ljust(name_width)}  {label:<20} {meaning}{evidence}")
         if s.note:
