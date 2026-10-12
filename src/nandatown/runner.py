@@ -672,6 +672,15 @@ def run_town(profile_name: str, out_dir: str, port: int = 0,
                 procs.append(p)
             return p
 
+        def restart_seller() -> subprocess.Popen | None:
+            # Both lifecycle events are on the record before the new
+            # process exists, so nothing it claims or replays can be
+            # recorded ahead of its own restart, however slow the post.
+            post_event("runner", "participant_crashed", "seller",
+                       {"exit_code": SELLER_CRASH_EXIT})
+            post_event("runner", "participant_restarted", "seller")
+            return spawn_seller()
+
         seller = spawn_seller()
         if buyer_cmd is None:
             hand_off("buyer", buyer_state)
@@ -723,11 +732,7 @@ def run_town(profile_name: str, out_dir: str, port: int = 0,
                 if rc is not None:
                     _stop_process(seller)
                     if rc == SELLER_CRASH_EXIT and not restarted:
-                        post_event("runner", "participant_crashed",
-                                   "seller", {"exit_code": rc})
-                        seller = spawn_seller()
-                        post_event("runner", "participant_restarted",
-                                   "seller")
+                        seller = restart_seller()
                         restarted = True
                     else:
                         post_event("runner", "participant_exited",
@@ -754,6 +759,14 @@ def run_town(profile_name: str, out_dir: str, port: int = 0,
         while time.time() < quiet_deadline:
             if seller_done or _quiescent(profile, get_events()):
                 break
+            # A seller can crash after the buyer has already settled its
+            # response (crash_amnesia answers, then dies before its ack),
+            # so the work it never acknowledged still gets its restart.
+            if (seller is not None and not restarted
+                    and seller.poll() == SELLER_CRASH_EXIT):
+                _stop_process(seller)
+                seller = restart_seller()
+                restarted = True
             time.sleep(0.2)
 
         if seller is not None:

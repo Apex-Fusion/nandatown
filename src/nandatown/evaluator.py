@@ -474,6 +474,57 @@ def evaluate(profile: TestProfile, run_id: str, events: list[TownEvent],
         else:
             stages.append(_missing("stale_fence_rejected",
                                    "no stale fence was rejected"))
+    elif fault in ("crash_amnesia", "crash_amnesia_fresh_ids"):
+        # The seller answered, lost its journal and died unacknowledged, so
+        # attempt two applies the work again. The seller's own "applied"
+        # flag cannot see that; the town's record can. Held means the town
+        # redelivered after the restart and absorbed the second answer as a
+        # replay of the response it already accepted.
+        # The proof is one chain, in record order: the town accepting the
+        # seller's response to this request, crash, restart, the seller's
+        # second claim of this request, then a replay of that response.
+        # Without that acceptance before the crash there was no answer to
+        # forget, and a replay from before the crash proves nothing about
+        # what the restarted seller did.
+        position = {e.event_id: i for i, e in enumerate(events)}
+        chain: list[TownEvent] = []
+        for candidates in (
+                [r for r in accepted_resp
+                 if r.detail.get("sender") == seller
+                 and _response_mismatch([r], accepted_req) is None],
+                find("participant_crashed", subject=seller),
+                find("participant_restarted", subject=seller),
+                [c for c in claims if c.detail.get("attempt", 1) >= 2
+                 and c.detail.get("claimant") == seller],
+                [e for r in accepted_resp
+                 for e in find("replay_returned", subject=r.subject,
+                               sender=seller)]):
+            after = position[chain[-1].event_id] if chain else -1
+            nxt = min((e for e in candidates
+                       if position[e.event_id] > after),
+                      key=lambda e: position[e.event_id], default=None)
+            if nxt is None:
+                break
+            chain.append(nxt)
+        if len(chain) < 4:
+            stages.append(_missing("amnesia_survived",
+                                   "no accepted seller response followed by"
+                                   " a crash, a restart and redelivery"))
+        elif len(accepted_resp) == 1 and len(chain) == 5:
+            stages.append(_passed(
+                "amnesia_survived", [e.event_id for e in chain],
+                "the forgotten work was applied again, and the town"
+                " returned the original acceptance for its answer"))
+        elif len(accepted_resp) > 1:
+            stages.append(_failed(
+                "amnesia_survived",
+                [e.event_id for e in accepted_resp],
+                f"the forgotten work answered again under a new identity:"
+                f" {len(accepted_resp)} distinct responses accepted"))
+        else:
+            stages.append(_missing("amnesia_survived",
+                                   "no replay of the response followed the"
+                                   " restarted seller's claim"))
     elif fault == "duplicate_delivery":
         offered = find("duplicate_offered")
         recognized = [a for a in seller_acks
