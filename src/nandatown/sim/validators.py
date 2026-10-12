@@ -1373,6 +1373,64 @@ def capability_spoofing(spec, trace: Trace) -> list[StageResult]:
     return stages
 
 
+@validator("registry_eviction")
+def registry_eviction(spec, trace: Trace) -> list[StageResult]:
+    """A forged card must not erase the listing it names: the forgery
+    is recorded, a quote request still arrives at the honest seller
+    after it, and the honest seller is paid for an order placed after
+    it. Requests that were only sent, payments for orders placed
+    before the forgery, and payments logged before their own orders
+    do not count."""
+    stages = []
+    victims = {a.config.get("victim") for a in spec.agents
+               if a.role == "rival_forger"} - {None}
+    forgeries = [e for e in (trace.find("card_unverified")
+                             + trace.find("card_publish_refused"))
+                 if e.subject in victims
+                 and e.detail.get("publisher") not in victims]
+    forgeries.sort(key=trace.index)
+    stages.append(_check(
+        "forgery_detected", bool(forgeries),
+        [e.event_id for e in forgeries],
+        "the forged card must be recorded as unverified or refused"))
+
+    after = trace.index(forgeries[0]) if forgeries else len(trace.events)
+
+    def sent_after(kind: str) -> list[TownEvent]:
+        return [e for e in trace.find("message_sent", kind=kind)
+                if e.detail.get("to") in victims and trace.index(e) > after]
+
+    failed = {e.subject for e in trace.find("delivery_failed")}
+    arrived = {e.subject: e for e in trace.find("message_delivered")
+               if e.subject not in failed}
+    requests = sent_after("quote_request")
+    reached = [e for e in requests if e.subject in arrived]
+    gave_up = trace.find("buyer_gave_up")
+    stages.append(_check(
+        "listing_intact", bool(reached),
+        _event_ids(reached + [arrived[e.subject] for e in reached])
+        or _event_ids(forgeries + requests + gave_up),
+        "a quote request must arrive at the honest seller after the"
+        " forgery"))
+
+    orders = {}
+    for e in sent_after("purchase_order"):
+        body = e.detail.get("body")
+        if isinstance(body, dict) and isinstance(body.get("order_id"), str):
+            orders[body["order_id"]] = (e.detail["to"], trace.index(e))
+    released = trace.find("escrow_released")
+    paid = [e for e in released
+            if trace.index(e) > after and e.subject in orders
+            and e.detail.get("to") == orders[e.subject][0]
+            and trace.index(e) > orders[e.subject][1]]
+    stages.append(_check(
+        "honest_trade_completed", bool(paid),
+        _event_ids(paid or released) or trace.ids("run_finished"),
+        "the honest seller must be paid for an order placed after the"
+        " forgery"))
+    return stages
+
+
 COMPLETION_KINDS = ["offer_accepted", "vote_result",
                     "consensus_committed", "task_awarded",
                     "escrow_released", "receipt_attested"]
