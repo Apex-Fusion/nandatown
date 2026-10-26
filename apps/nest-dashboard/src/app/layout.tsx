@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { HackathonBanner } from "@/components/hackathon-banner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -129,7 +128,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
-        <HackathonBanner />
         <div className="flex min-h-screen flex-col md:flex-row">
           <Navbar />
           <div className="flex min-w-0 flex-1 flex-col">

@@ -394,11 +394,7 @@ export default function DocsPage() {
               inside the Nanda Town sandbox using the{' '}
               <InlineCode>SKILL.md</InlineCode> framework and submitted them as
               GitHub pull requests. It ran entirely online from June 7 to July
-              11, 2026. Audience Choice voting on SkillMDs stays open through
-              September 25, 2026 on the{' '}
-              <a href="/skills" className="text-rust hover:text-rust/80 underline underline-offset-2">
-                Skills page
-              </a>.
+              11, 2026.
             </p>
 
             <div className="mb-8 grid gap-3 sm:grid-cols-2">

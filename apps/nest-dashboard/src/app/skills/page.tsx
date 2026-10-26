@@ -139,30 +139,15 @@ export default async function SkillsPage({
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="max-w-xl">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-rust">
-                  Audience Choice Award · $1,000 · SkillMD only
+                  The SkillMD registry
                 </p>
                 <p className="mt-2.5 text-[0.95rem] leading-[1.6] text-ink-600">
-                  Voting has been extended through September 25, 2026. The award covers the submissions marked{" "}
-                  <span className="font-semibold text-rust">NandaHack entry</span>,
-                  the SkillMDs submitted by the July 11 hackathon deadline.
-                  Newer submissions join the registry but are not in the award
-                  pool. It is separate from your{" "}
-                  <span className="font-semibold text-ink-900">
-                    Phase 2 submission
-                  </span>
-                  , which counted for 80% of your score. Heart your favorites
-                  below; the NandaHack entry with the most likes wins the Audience
-                  Choice Award and{" "}
-                  <span className="font-semibold text-ink-900">$1,000</span>.
-                  Anyone can see the vote counts and who cast them; liking needs
-                  a quick sign-in so it stays bot-free.
-                </p>
-                <p className="mt-2.5 text-[0.95rem] leading-[1.6] text-ink-600">
-                  Want the votes? Share your build on{" "}
-                  <span className="font-semibold text-ink-900">LinkedIn</span>{" "}
-                  and tag{" "}
-                  <span className="font-semibold text-ink-900">Project NANDA</span>{" "}
-                  to rally support.
+                  Submissions marked{" "}
+                  <span className="font-semibold text-rust">NandaHack entry</span>{" "}
+                  are the SkillMDs submitted by the July 11 hackathon deadline;
+                  newer submissions join the registry alongside them. Heart your
+                  favorites below. Anyone can see the vote counts and who cast
+                  them; liking needs a quick sign-in so it stays bot-free.
                 </p>
               </div>
               <AuthChip
