@@ -1,0 +1,43 @@
+{
+  "identities": {
+    "did:vector:agent:be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01:acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2": {
+      "blocks_deep_at_tip": 1002,
+      "history": [
+        {
+          "block_height": 9073354,
+          "event": "registered",
+          "owner_pkh": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb",
+          "slot": 36793345,
+          "tx": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682"
+        },
+        {
+          "block_height": 9073392,
+          "event": "controller_rotated",
+          "from_pkh": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb",
+          "slot": 36793554,
+          "to_pkh": "08bd66d20ff55482bfa4c8e821dd24ea4715571d41f23806f3e72431",
+          "tx": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5"
+        }
+      ],
+      "owner_pkh": "08bd66d20ff55482bfa4c8e821dd24ea4715571d41f23806f3e72431",
+      "registry_ref": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5#0",
+      "status": "active"
+    }
+  },
+  "key_hash": "blake2b-224 of the raw Ed25519 public key",
+  "network": {
+    "koios": "https://v2.koios.vector.mainnet.apexfusion.org/api/v1",
+    "name": "vector-mainnet",
+    "network_magic": 764824073,
+    "security_param": 2160,
+    "system_start": 1756485600
+  },
+  "registry": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+  "schema": "registry-snapshot/v1",
+  "source": "vector-mainnet",
+  "tip": {
+    "block_hash": "860b5dcf7f9162031adbf3e4ef3313d7dac21852ae9ff579bd598633af1b131a",
+    "block_height": 9074394,
+    "slot": 36797507
+  }
+}

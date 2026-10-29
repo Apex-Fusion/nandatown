@@ -1,0 +1,20 @@
+name: rotation_vector_mainnet
+description: "Vector mainnet snapshot. vector-rotation-demo was registered under K1 and transferred to K2 on Vector mainnet; snapshots/vector-mainnet.json records both transactions. Each provider presents a claim its controller key signed once, off-chain, before the run. K1's claim is refused on the record before any traffic; K2 is verified and paid. Both claimants are Apex Fusion's, first-party; the identity was minted for this demo on 2026-10-29. No chain call and no private key in the run."
+seed: 42
+validator: registry_rotation
+plugin_files: [../registry_snapshot.py]
+layers:
+  identity: claims.v1
+  auth: ed25519.v1
+  registry: snapshot.vector-mainnet.v1
+agents:
+  - name: provider-current
+    role: seller
+    config: {sku: text-stats, ask_cents: 1995, floor_cents: 1700, stock: 10, balance_cents: 0, claim: {"identity": "did:vector:agent:be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01:acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2", "controller_pub": "47db17cd5337bf048c5d649fc03416405675429582a818e7539803411ce5f326", "signature": "41a70c9f8b6a84ac9d0cd0165ac727d5d44c2c7e07c670d3bdc37a23204fa02002ee64d0ffc3ed54db32679828663ac2b834a86b9dbf56a6545df5907d44830b"}}
+  - name: provider-former
+    role: former_controller
+    config: {sku: text-stats, ask_cents: 1500, floor_cents: 1200, stock: 10, balance_cents: 0, claim: {"identity": "did:vector:agent:be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01:acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2", "controller_pub": "d155df0afe9c12548c90e3ff3042b8b5b0bf5c96a5d109f8666762c496da67c6", "signature": "b5ffca85efa7b2716c31f6e30526ceccdd028e1dfbadd55f0c545c86670f5170532597f15ba5e011f72ee32fa5aaaacbf97b93802415d387276f3d33741eaf02"}}
+  - name: buyer-1
+    role: buyer
+    config: {sku: text-stats, quantity: 1, cap_cents: 1900, balance_cents: 10000, rounds: 1}
+max_time: 60
