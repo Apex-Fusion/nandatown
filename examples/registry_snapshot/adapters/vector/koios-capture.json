@@ -1,0 +1,525 @@
+{
+ "/asset_txs?_asset_policy=be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01&_asset_name=acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2&_history=true&order=block_height.asc,tx_hash.asc&offset=0&limit=1000": [
+  {
+   "block_height": 9073354,
+   "block_time": 1793278945,
+   "epoch_no": 428,
+   "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682"
+  },
+  {
+   "block_height": 9073392,
+   "block_time": 1793279154,
+   "epoch_no": 428,
+   "tx_hash": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5"
+  }
+ ],
+ "/genesis": [
+  {
+   "activeslotcoeff": "0.25",
+   "alonzogenesis": null,
+   "epochlength": "86400",
+   "maxkesrevolutions": "62",
+   "maxlovelacesupply": "3000000000000000",
+   "networkid": "Mainnet",
+   "networkmagic": "764824073",
+   "securityparam": "2160",
+   "slotlength": "1",
+   "slotsperkesperiod": "129600",
+   "systemstart": 1756485600,
+   "updatequorum": "3"
+  }
+ ],
+ "/tip": [
+  {
+   "abs_slot": 36800565,
+   "block_height": 9075184,
+   "block_no": 9075184,
+   "block_time": 1793286165,
+   "epoch_no": 428,
+   "epoch_slot": 80565,
+   "era": "Conway",
+   "hash": "edc063852457b58cc642378a8ca44a0f9c40c18b7ba82c885f157f2c9bf23e7e"
+  }
+ ],
+ "/tx_info {\"_assets\": true, \"_inputs\": true, \"_scripts\": true, \"_tx_hashes\": [\"80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682\", \"91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5\"]}": [
+  {
+   "absolute_slot": 36793345,
+   "assets_minted": [
+    {
+     "asset_name": "acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2",
+     "decimals": 0,
+     "fingerprint": "asset1erm7vk46sxj97shd6rx7h0deuuyqvp2w02ylm7",
+     "policy_id": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+     "quantity": "1"
+    }
+   ],
+   "block_hash": "1d76061f6ad92021a2048122b3bee2434442e4db6a56fcb4b15beba1e025662d",
+   "block_height": 9073354,
+   "certificates": [],
+   "collateral_inputs": [
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "38a8650b923caf66fba21ad049a38aa35b959d1a836a842af830fe4df78d5dc4",
+     "tx_index": 0,
+     "value": "20000000"
+    }
+   ],
+   "collateral_output": {
+    "asset_list": "[]",
+    "datum_hash": null,
+    "inline_datum": null,
+    "payment_addr": {
+     "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+     "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+    },
+    "reference_script": null,
+    "stake_addr": null,
+    "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+    "tx_index": 2,
+    "value": "15000000"
+   },
+   "deposit": "0",
+   "epoch_no": 428,
+   "epoch_slot": 73345,
+   "fee": "327425",
+   "inputs": [
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "38a8650b923caf66fba21ad049a38aa35b959d1a836a842af830fe4df78d5dc4",
+     "tx_index": 0,
+     "value": "20000000"
+    }
+   ],
+   "invalid_after": null,
+   "invalid_before": null,
+   "metadata": null,
+   "native_scripts": [],
+   "outputs": [
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+     "tx_index": 1,
+     "value": "9672575"
+    },
+    {
+     "asset_list": [
+      {
+       "asset_name": "acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2",
+       "decimals": 0,
+       "fingerprint": "asset1erm7vk46sxj97shd6rx7h0deuuyqvp2w02ylm7",
+       "policy_id": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+       "quantity": "1"
+      }
+     ],
+     "datum_hash": "cb1673122196376f79a9a0046a382a752a93aab1986baa9f2767499fc34da075",
+     "inline_datum": {
+      "bytes": null,
+      "value": {
+       "constructor": 0,
+       "fields": [
+        {
+         "constructor": 0,
+         "fields": [
+          {
+           "bytes": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d726f746174696f6e2d64656d6f"
+        },
+        {
+         "bytes": "44656d6f206964656e7469747920666f72206120636f6e74726f6c6c65722d726f746174696f6e20636865636b3a207265676973746572656420756e646572206f6e65206b65792c207468656e207472616e7366657272656420746f20616e6f746865722e205365727665732064656d6f2e746578742e73746174732e76312e2046697273742d70617274792c204170657820467573696f6e2d6f706572617465642e"
+        },
+        {
+         "list": [
+          {
+           "bytes": "64656d6f2e746578742e73746174732e7631"
+          },
+          {
+           "bytes": "6964656e746974792d726f746174696f6e2d64656d6f"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d6167656e742d74656d706c617465"
+        },
+        {
+         "bytes": "68747470733a2f2f6d702d737570706c696572732d726f746174696f6e2d64656d6f2e68616c382e6169"
+        },
+        {
+         "int": 1793278936225
+        }
+       ]
+      }
+     },
+     "payment_addr": {
+      "bech32": "addr1wxlp5z3fztdpsp6ha57dvx6khw82kqvgcxwu8s8rjykjcqghprf42",
+      "cred": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+     "tx_index": 0,
+     "value": "10000000"
+    }
+   ],
+   "plutus_contracts": [
+    {
+     "address": null,
+     "bytecode": null,
+     "input": {
+      "datum": null,
+      "redeemer": {
+       "datum": {
+        "hash": "56e9606070a0b5eb5f3bd9e5a40be2ad26da9c151fe6d5eae8d880911ed3c7d7",
+        "value": {
+         "constructor": 0,
+         "fields": [
+          {
+           "constructor": 0,
+           "fields": [
+            {
+             "bytes": "38a8650b923caf66fba21ad049a38aa35b959d1a836a842af830fe4df78d5dc4"
+            },
+            {
+             "int": 0
+            }
+           ]
+          }
+         ]
+        }
+       },
+       "fee": "14977",
+       "purpose": "mint",
+       "unit": {
+        "mem": "179604",
+        "steps": "63982721"
+       }
+      }
+     },
+     "script_hash": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+     "size": 2516,
+     "spends_input": null,
+     "valid_contract": true
+    }
+   ],
+   "proposal_procedures": [],
+   "reference_inputs": [],
+   "total_output": "19672575",
+   "treasury_donation": "0",
+   "tx_block_index": 0,
+   "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+   "tx_size": 3466,
+   "tx_timestamp": 1793278945,
+   "voting_procedures": [],
+   "withdrawals": []
+  },
+  {
+   "absolute_slot": 36793554,
+   "assets_minted": [],
+   "block_hash": "074de6886059483096e5e9dec8dbdfbb0c483b76dee0b3a0e5c182766be483d2",
+   "block_height": 9073392,
+   "certificates": [],
+   "collateral_inputs": [
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+     "tx_index": 1,
+     "value": "9672575"
+    }
+   ],
+   "collateral_output": {
+    "asset_list": "[]",
+    "datum_hash": null,
+    "inline_datum": null,
+    "payment_addr": {
+     "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+     "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+    },
+    "reference_script": null,
+    "stake_addr": null,
+    "tx_hash": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5",
+    "tx_index": 2,
+    "value": "4672575"
+   },
+   "deposit": "0",
+   "epoch_no": 428,
+   "epoch_slot": 73554,
+   "fee": "327568",
+   "inputs": [
+    {
+     "asset_list": [
+      {
+       "asset_name": "acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2",
+       "decimals": 0,
+       "fingerprint": "asset1erm7vk46sxj97shd6rx7h0deuuyqvp2w02ylm7",
+       "policy_id": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+       "quantity": "1"
+      }
+     ],
+     "datum_hash": "cb1673122196376f79a9a0046a382a752a93aab1986baa9f2767499fc34da075",
+     "inline_datum": {
+      "bytes": null,
+      "value": {
+       "constructor": 0,
+       "fields": [
+        {
+         "constructor": 0,
+         "fields": [
+          {
+           "bytes": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d726f746174696f6e2d64656d6f"
+        },
+        {
+         "bytes": "44656d6f206964656e7469747920666f72206120636f6e74726f6c6c65722d726f746174696f6e20636865636b3a207265676973746572656420756e646572206f6e65206b65792c207468656e207472616e7366657272656420746f20616e6f746865722e205365727665732064656d6f2e746578742e73746174732e76312e2046697273742d70617274792c204170657820467573696f6e2d6f706572617465642e"
+        },
+        {
+         "list": [
+          {
+           "bytes": "64656d6f2e746578742e73746174732e7631"
+          },
+          {
+           "bytes": "6964656e746974792d726f746174696f6e2d64656d6f"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d6167656e742d74656d706c617465"
+        },
+        {
+         "bytes": "68747470733a2f2f6d702d737570706c696572732d726f746174696f6e2d64656d6f2e68616c382e6169"
+        },
+        {
+         "int": 1793278936225
+        }
+       ]
+      }
+     },
+     "payment_addr": {
+      "bech32": "addr1wxlp5z3fztdpsp6ha57dvx6khw82kqvgcxwu8s8rjykjcqghprf42",
+      "cred": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+     "tx_index": 0,
+     "value": "10000000"
+    },
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+     "tx_index": 1,
+     "value": "9672575"
+    }
+   ],
+   "invalid_after": null,
+   "invalid_before": null,
+   "metadata": null,
+   "native_scripts": [],
+   "outputs": [
+    {
+     "asset_list": [],
+     "datum_hash": null,
+     "inline_datum": null,
+     "payment_addr": {
+      "bech32": "addr1vx2wjx00p7rhchqcf3mprzrsnwkvdl8u5u3kfa328cxad7c4acnqt",
+      "cred": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5",
+     "tx_index": 1,
+     "value": "9345007"
+    },
+    {
+     "asset_list": [
+      {
+       "asset_name": "acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2",
+       "decimals": 0,
+       "fingerprint": "asset1erm7vk46sxj97shd6rx7h0deuuyqvp2w02ylm7",
+       "policy_id": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+       "quantity": "1"
+      }
+     ],
+     "datum_hash": "9cd6bcf598fff7053d2b7a4fbb4bc44b8f6e223d4ab026cab308cb435e12d01b",
+     "inline_datum": {
+      "bytes": null,
+      "value": {
+       "constructor": 0,
+       "fields": [
+        {
+         "constructor": 0,
+         "fields": [
+          {
+           "bytes": "08bd66d20ff55482bfa4c8e821dd24ea4715571d41f23806f3e72431"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d726f746174696f6e2d64656d6f"
+        },
+        {
+         "bytes": "44656d6f206964656e7469747920666f72206120636f6e74726f6c6c65722d726f746174696f6e20636865636b3a207265676973746572656420756e646572206f6e65206b65792c207468656e207472616e7366657272656420746f20616e6f746865722e205365727665732064656d6f2e746578742e73746174732e76312e2046697273742d70617274792c204170657820467573696f6e2d6f706572617465642e"
+        },
+        {
+         "list": [
+          {
+           "bytes": "64656d6f2e746578742e73746174732e7631"
+          },
+          {
+           "bytes": "6964656e746974792d726f746174696f6e2d64656d6f"
+          }
+         ]
+        },
+        {
+         "bytes": "766563746f722d6167656e742d74656d706c617465"
+        },
+        {
+         "bytes": "68747470733a2f2f6d702d737570706c696572732d726f746174696f6e2d64656d6f2e68616c382e6169"
+        },
+        {
+         "int": 1793278936225
+        }
+       ]
+      }
+     },
+     "payment_addr": {
+      "bech32": "addr1wxlp5z3fztdpsp6ha57dvx6khw82kqvgcxwu8s8rjykjcqghprf42",
+      "cred": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01"
+     },
+     "reference_script": null,
+     "stake_addr": null,
+     "tx_hash": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5",
+     "tx_index": 0,
+     "value": "10000000"
+    }
+   ],
+   "plutus_contracts": [
+    {
+     "address": "addr1wxlp5z3fztdpsp6ha57dvx6khw82kqvgcxwu8s8rjykjcqghprf42",
+     "bytecode": null,
+     "input": {
+      "datum": {
+       "hash": "cb1673122196376f79a9a0046a382a752a93aab1986baa9f2767499fc34da075",
+       "value": {
+        "constructor": 0,
+        "fields": [
+         {
+          "constructor": 0,
+          "fields": [
+           {
+            "bytes": "94e919ef0f877c5c184c761188709bacc6fcfca72364f62a3e0dd6fb"
+           }
+          ]
+         },
+         {
+          "bytes": "766563746f722d726f746174696f6e2d64656d6f"
+         },
+         {
+          "bytes": "44656d6f206964656e7469747920666f72206120636f6e74726f6c6c65722d726f746174696f6e20636865636b3a207265676973746572656420756e646572206f6e65206b65792c207468656e207472616e7366657272656420746f20616e6f746865722e205365727665732064656d6f2e746578742e73746174732e76312e2046697273742d70617274792c204170657820467573696f6e2d6f706572617465642e"
+         },
+         {
+          "list": [
+           {
+            "bytes": "64656d6f2e746578742e73746174732e7631"
+           },
+           {
+            "bytes": "6964656e746974792d726f746174696f6e2d64656d6f"
+           }
+          ]
+         },
+         {
+          "bytes": "766563746f722d6167656e742d74656d706c617465"
+         },
+         {
+          "bytes": "68747470733a2f2f6d702d737570706c696572732d726f746174696f6e2d64656d6f2e68616c382e6169"
+         },
+         {
+          "int": 1793278936225
+         }
+        ]
+       }
+      },
+      "redeemer": {
+       "datum": {
+        "hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
+        "value": {
+         "constructor": 0,
+         "fields": []
+        }
+       },
+       "fee": "18360",
+       "purpose": "spend",
+       "unit": {
+        "mem": "223357",
+        "steps": "75889964"
+       }
+      }
+     },
+     "script_hash": "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01",
+     "size": 2516,
+     "spends_input": {
+      "tx_hash": "80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682",
+      "tx_index": 0
+     },
+     "valid_contract": true
+    }
+   ],
+   "proposal_procedures": [],
+   "reference_inputs": [],
+   "total_output": "19345007",
+   "treasury_donation": "0",
+   "tx_block_index": 0,
+   "tx_hash": "91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5",
+   "tx_size": 3394,
+   "tx_timestamp": 1793279154,
+   "voting_procedures": [],
+   "withdrawals": []
+  }
+ ]
+}

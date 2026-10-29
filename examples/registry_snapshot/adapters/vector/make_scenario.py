@@ -21,7 +21,7 @@ from sign_claim import load_key, sign_claim  # noqa: E402
 
 POLICY = "be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01"
 DESCRIPTION = ("Vector mainnet snapshot. vector-rotation-demo was registered under K1"
-               " and transferred to K2 on Vector mainnet; snapshots/vector-mainnet.json"
+               " and transferred to K2 on Vector mainnet; adapters/vector/vector-mainnet.json"
                " records both transactions. Each provider presents a claim its"
                " controller key signed once, off-chain, before the run. K1's claim is"
                " refused on the record before any traffic; K2 is verified and paid."
@@ -41,7 +41,7 @@ def main() -> int:
 description: {json.dumps(DESCRIPTION)}
 seed: 42
 validator: registry_rotation
-plugin_files: [../registry_snapshot.py]
+plugin_files: [../registry_snapshot.py, ../adapters/vector/vector_snapshot.py]
 layers:
   identity: claims.v1
   auth: ed25519.v1

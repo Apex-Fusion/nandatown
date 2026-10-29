@@ -25,11 +25,9 @@ from pathlib import Path
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
+from nandatown.records import canonical_json
+
 STATEMENT = "registry-claim/v1"
-
-
-def canonical_json(obj) -> str:
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
 def load_key(skey: str | None, seed_hex: str | None) -> Ed25519PrivateKey:

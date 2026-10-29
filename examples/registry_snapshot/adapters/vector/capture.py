@@ -1,7 +1,7 @@
 """Vector adapter: capture a registry-snapshot/v1 file from Vector mainnet.
 
     python capture.py --did did:vector:agent:<policy>:<asset> [--did ...] \
-        [--out ../../snapshots/vector-mainnet.json] [--force]
+        [--out vector-mainnet.json] [--force] [--record-fixture koios.json]
 
 Reads Vector's public Koios API (keyless, read-only) and records, for each
 agent identity: every transaction that ever moved its registry token, in
@@ -33,13 +33,25 @@ DID_PREFIX = "did:vector:agent:"
 PAGE = 1000
 
 
+RECORDED: dict | None = None
+
+
 def koios(path: str, body: dict | None = None):
+    """One Koios call. With --record-fixture, every response is also kept,
+    keyed by the request, so a test can replay the capture offline."""
     req = urllib.request.Request(
         KOIOS + path, data=None if body is None else json.dumps(body).encode(),
         headers={"accept": "application/json", "content-type": "application/json",
                  "user-agent": "registry-snapshot-capture/1"})
     with urllib.request.urlopen(req, timeout=60) as resp:
-        return json.loads(resp.read())
+        out = json.loads(resp.read())
+    if RECORDED is not None:
+        RECORDED[request_key(path, body)] = out
+    return out
+
+
+def request_key(path: str, body: dict | None) -> str:
+    return path if body is None else path + " " + json.dumps(body, sort_keys=True)
 
 
 def parse_did(did: str) -> str:
@@ -78,10 +90,11 @@ def asset_txs(asset: str) -> list[str]:
     hashes, offset = [], 0
     while True:
         page = koios(f"/asset_txs?_asset_policy={POLICY}&_asset_name={asset}"
-                     f"&_history=true&offset={offset}&limit={PAGE}")
+                     f"&_history=true&order=block_height.asc,tx_hash.asc"
+                     f"&offset={offset}&limit={PAGE}")
         hashes += [t["tx_hash"] for t in page]
         if len(page) < PAGE:
-            return hashes
+            return list(dict.fromkeys(hashes))
         offset += PAGE
 
 
@@ -90,8 +103,10 @@ def capture_identity(did: str) -> dict:
     hashes = asset_txs(asset)
     if not hashes:
         raise SystemExit(f"{did}: no registry transactions")
-    infos = koios("/tx_info", {"_tx_hashes": hashes, "_inputs": True,
-                               "_assets": True, "_scripts": True})
+    infos = []
+    for i in range(0, len(hashes), 50):
+        infos += koios("/tx_info", {"_tx_hashes": hashes[i:i + 50], "_inputs": True,
+                                    "_assets": True, "_scripts": True})
     infos.sort(key=lambda t: (t["block_height"], t["tx_block_index"]))
     history, owner, ref = [], None, None
     for tx in infos:
@@ -143,19 +158,28 @@ def capture(dids: list[str]) -> dict:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--did", action="append", required=True)
-    ap.add_argument("--out", default=str(HERE.parents[1] / "snapshots" / "vector-mainnet.json"))
+    ap.add_argument("--out", default=str(HERE / "vector-mainnet.json"))
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--record-fixture", help="also write every Koios response here")
     a = ap.parse_args(argv)
     out = Path(a.out)
     if out.exists() and not a.force:
         raise SystemExit(f"REFUSING: {out} exists (pinned); pass --force to recapture")
+    global RECORDED
+    if a.record_fixture:
+        RECORDED = {}
     snap = capture(a.did)
     out.write_text(json.dumps(snap, indent=2, sort_keys=True) + "\n",
                    encoding="utf-8", newline="\n")
     for did, rec in snap["identities"].items():
         print(f"{did}: {rec['status']}, {len(rec['history'])} txs,"
               f" {rec['blocks_deep_at_tip']} blocks deep (k = {snap['network']['security_param']})")
-    print(f"wrote {out} at tip slot {snap['tip']['slot']}")
+    from nandatown.records import fingerprint
+    print(f"wrote {out} at tip slot {snap['tip']['slot']}, fingerprint {fingerprint(snap)}"
+          " (pin it in vector_snapshot.py)")
+    if a.record_fixture:
+        Path(a.record_fixture).write_text(json.dumps(RECORDED, indent=1, sort_keys=True)
+                                          + "\n", encoding="utf-8", newline="\n")
     return 0
 
 
