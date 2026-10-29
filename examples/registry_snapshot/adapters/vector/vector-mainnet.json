@@ -1,7 +1,7 @@
 {
   "identities": {
     "did:vector:agent:be1a0a2912da180757ed3cd61b56bb8eab0188c19dc3c0e3912d2c01:acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2": {
-      "blocks_deep_at_tip": 1792,
+      "blocks_deep_at_tip": 2175,
       "history": [
         {
           "block_height": 9073354,
@@ -36,8 +36,8 @@
   "schema": "registry-snapshot/v1",
   "source": "vector-mainnet",
   "tip": {
-    "block_hash": "edc063852457b58cc642378a8ca44a0f9c40c18b7ba82c885f157f2c9bf23e7e",
-    "block_height": 9075184,
-    "slot": 36800565
+    "block_hash": "28557c9899108cdfb5505a85ff529aea4cd5325cd30811674bafa0a8a3ecb2ac",
+    "block_height": 9075567,
+    "slot": 36802064
   }
 }

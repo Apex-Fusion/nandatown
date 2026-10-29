@@ -148,9 +148,9 @@ Bundles also record the absolute path of each plugin file in `profile.json`, bec
 | Identity | `did:vector:agent:be1a0a29…2c01:acd896b4ed9ed81392f158c245ad322cdea7dcae89b317a61e1e655648832bc2` (`vector-rotation-demo`) |
 | Registered under K1 | tx `80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682`, block 9073354, slot 36793345, controller `94e919ef…` |
 | Rotated K1 → K2 | tx `91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5`, block 9073392, slot 36793554, controller `08bd66d2…` |
-| Tip at capture | block 9075184, slot 36800565, hash `edc063852457b58c…`; the rotation was 1792 blocks deep against security parameter k = 2160 |
+| Tip at capture | block 9075567, slot 36802064, hash `28557c9899108cdf…`; the rotation was 2175 blocks deep against security parameter k = 2160 |
 | Network | `vector-mainnet`, system start 1756485600, network magic 764824073 |
-| Snapshot fingerprint (pinned in `vector_snapshot.py`) | `sha256:03433d350be8a4f9ca2ea2a1b84e260380af7c5c86ef3bb31eed5100710d493d` |
+| Snapshot fingerprint (pinned in `vector_snapshot.py`) | `sha256:21403cb4c13e3549a61a5dd14f9d3bf9b338b1f983006ffbfffd058cc0455e96` |
 | Mock fingerprint (pinned in `registry_snapshot.py`) | `sha256:77ab614f48fdc852c568e5c1c825c76f1dba7ef4c5a37359d6913ed4bdcb6a4e` |
 
 **Disclosure.** The identity was minted for this demonstration on 2026-10-29, and both claimants are operated by Apex Fusion. It is a first-party fixture, not independent adoption. No run calls a chain.

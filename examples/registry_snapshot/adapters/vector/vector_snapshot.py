@@ -17,7 +17,7 @@ from pathlib import Path
 from nandatown.layers import register, resolve
 
 HERE = Path(__file__).resolve().parent
-PIN = "sha256:03433d350be8a4f9ca2ea2a1b84e260380af7c5c86ef3bb31eed5100710d493d"
+PIN = "sha256:21403cb4c13e3549a61a5dd14f9d3bf9b338b1f983006ffbfffd058cc0455e96"
 
 
 def _snapshot_index():

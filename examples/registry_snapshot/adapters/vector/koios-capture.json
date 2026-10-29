@@ -31,14 +31,14 @@
  ],
  "/tip": [
   {
-   "abs_slot": 36800565,
-   "block_height": 9075184,
-   "block_no": 9075184,
-   "block_time": 1793286165,
+   "abs_slot": 36802064,
+   "block_height": 9075567,
+   "block_no": 9075567,
+   "block_time": 1793287664,
    "epoch_no": 428,
-   "epoch_slot": 80565,
+   "epoch_slot": 82064,
    "era": "Conway",
-   "hash": "edc063852457b58cc642378a8ca44a0f9c40c18b7ba82c885f157f2c9bf23e7e"
+   "hash": "28557c9899108cdfb5505a85ff529aea4cd5325cd30811674bafa0a8a3ecb2ac"
   }
  ],
  "/tx_info {\"_assets\": true, \"_inputs\": true, \"_scripts\": true, \"_tx_hashes\": [\"80ddea05080a48630246161c80456b1db0eaa27ac3b4a776048440c91321b682\", \"91b9f8878ffab2d693e77383c41e2ee1a5af926e835dfb16f3ffa198027296e5\"]}": [
