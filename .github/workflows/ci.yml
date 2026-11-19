@@ -12,7 +12,7 @@ concurrency:
 jobs:
   dashboard:
     runs-on: nixos
-    timeout-minutes: 15
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: apps/nest-dashboard
@@ -30,7 +30,7 @@ jobs:
 
   test:
     runs-on: nixos
-    timeout-minutes: 15
+    timeout-minutes: 35
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
@@ -52,7 +52,7 @@ jobs:
 
   distribution:
     runs-on: nixos
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
