@@ -7,7 +7,7 @@ on:
 
 jobs:
   dashboard:
-    runs-on: ubuntu-latest
+    runs-on: nixos
     defaults:
       run:
         working-directory: apps/nest-dashboard
@@ -24,7 +24,7 @@ jobs:
         run: npm run build
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: nixos
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
@@ -43,7 +43,7 @@ jobs:
         run: nandatown run quote-crash-restart --out /tmp/runs
 
   distribution:
-    runs-on: ubuntu-latest
+    runs-on: nixos
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
