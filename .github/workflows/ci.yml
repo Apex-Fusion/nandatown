@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   dashboard:
-    runs-on: nixos
+    runs-on: self-hosted
     timeout-minutes: 10
     defaults:
       run:
@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
   test:
-    runs-on: nixos
+    runs-on: self-hosted
     timeout-minutes: 35
     strategy:
       matrix:
@@ -51,7 +51,7 @@ jobs:
         run: nandatown run quote-crash-restart --out /tmp/runs
 
   distribution:
-    runs-on: nixos
+    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
